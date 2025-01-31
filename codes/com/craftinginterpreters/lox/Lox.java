@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.text.html.HTMLEditorKit;
 
 public class Lox {
   private static final Interpreter interpreter = new Interpreter();
@@ -65,11 +66,14 @@ public class Lox {
       System.out.println(token);
     }
 
+Parser parser = new Parser(tokens);
 
-    //構文があれば停止する
+List<Stmt> statements = parser.parse();
+
+    //構文エラーがあれば停止する
     if (hadError) return;
 
-    interpreter.interpret(expression);
+    interpreter.interpret(statements);
 
 
 
